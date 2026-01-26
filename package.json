@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SamuelPapyan/my-lib.git"
+    "url": "git+https://github.com/samuelpapyan/my-lib.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -18,7 +18,7 @@
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/SamuelPapyan/my-lib/issues"
+    "url": "https://github.com/samuelpapyan/my-lib/issues"
   },
-  "homepage": "https://github.com/SamuelPapyan/my-lib#readme"
+  "homepage": "https://github.com/samuelpapyan/my-lib#readme"
 }
