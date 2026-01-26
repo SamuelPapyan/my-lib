@@ -5,5 +5,6 @@ exports.block = {
     y: 2,
     z: 3,
     a: 4,
-    b: 5
+    b: 5,
+    c: 6
 }
