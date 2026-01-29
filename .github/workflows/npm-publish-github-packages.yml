@@ -25,7 +25,10 @@ jobs:
           scope: '@${{ github.repository_owner }}'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Build
+        run: npm run build 
 
       - name: Publish to GitHub Packages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
