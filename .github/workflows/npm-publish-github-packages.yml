@@ -10,7 +10,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -33,7 +33,20 @@ jobs:
       - name: Publish to GitHub Packages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-         npm version patch --no-git-tag-version
-         npm publish
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npm version patch -m "chore(release): %s [skip ci]"
+          npm publish
+          git push origin main --follow-tags
         env:
           NODE_AUTH_TOKEN: ${{ secrets.CLASSIC_TOKEN }}
+      
+      - name: Back-merge main into dev
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git fetch origin dev
+          git checkout dev
+          git merge main --no-edit -m "chore: sync main to dev [skip ci]"
+          git push origin dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
