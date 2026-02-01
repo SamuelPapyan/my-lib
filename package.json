@@ -35,8 +35,6 @@
   },
   "devDependencies": {
     "del-cli": "^7.0.0",
-    "express": "^5.2.1",
-    "multer": "^2.0.2",
     "typescript": "^5.9.3"
   }
 }
