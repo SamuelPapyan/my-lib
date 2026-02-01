@@ -28,8 +28,11 @@ jobs:
       - name: Publish Beta Version to GitHub Packages
         if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
         run: |
-          npm version prerelease --preid=beta --no-git-tag-version
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npm version prerelease --preid=beta -m "chore(release): %s [skip ci]"
           npm publish --tag dev
+          git push origin dev --follow-tags
 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
