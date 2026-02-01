@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -44,9 +46,10 @@ jobs:
       - name: Back-merge main into dev
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          git fetch origin dev
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout dev
-          git merge main --no-edit -m "chore: sync main to dev [skip ci]"
+          git merge main --no-edit --allow-unrelated-histories -m "chore: sync main to dev [skip ci]"
           git push origin dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
