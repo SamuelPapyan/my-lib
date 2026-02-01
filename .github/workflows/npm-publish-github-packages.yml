@@ -33,6 +33,7 @@ jobs:
       - name: Publish to GitHub Packages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+         npm version patch --no-git-tag-version
          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.CLASSIC_TOKEN }}
