@@ -19,3 +19,7 @@ export const sqr = (x: number) => {
 export const sum = (x: number, y:number) => {
     return x+y;
 }
+
+export const mul = (x: number, y:number) => {
+    return x*y;
+}
