@@ -1,0 +1,38 @@
+name: CI and Publish Beta Version to GitHub Packages
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Installing dependencies
+        run: npm ci
+
+      - name: Building
+        run: npm run build
+
+      - name: Publish Beta Version to GitHub Packages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          npm version prerelease --preid=beta -m "chore(release): %s [skip ci]"
+          npm publish --tag dev
+          git push origin dev --follow-tags
+
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
